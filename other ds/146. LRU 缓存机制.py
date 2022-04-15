@@ -19,6 +19,7 @@ class LRUCache:
         cur_node = self.hashmap[key]
         cur_node.prev.next = cur_node.next
         cur_node.next.prev = cur_node.prev
+
         self.tail.prev.next = cur_node
         cur_node.prev = self.tail.prev
         self.tail.prev = cur_node
