@@ -58,6 +58,52 @@ class Codec:
         return root
 
 
+    def serialize(self, root):
+        if root is None:
+            return ""
+
+        preorder_list = []
+        def preorder(root):
+            preorder_list.append(str(root.val))
+
+            if root.left:
+                preorder(root.left)
+            else:
+                preorder_list.append("None")
+
+            if root.right:
+                preorder(root.right)
+            else:
+                preorder_list.append("None")
+
+        preorder(root)
+
+        res = " ".join(preorder_list)
+        print(res)
+
+        return res
+
+    def deserialize(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        preorder_list = data.split()
+
+        def preorder(preorder_list):
+            cur_val = preorder_list.pop(0).strip()
+            if cur_val == "None" and not cur_val.isdigit():
+                return None
+
+            cur_val = int(cur_val)
+            cur_node = TreeNode(cur_val)
+            cur_node.left = preorder(preorder_list)
+            cur_node.right = preorder(preorder_list)
+            return cur_node
+
+        root = preorder(preorder_list)
+        return root
+
+
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
